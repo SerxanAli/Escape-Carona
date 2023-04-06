@@ -16,13 +16,16 @@ class GameScene: SKScene {
         // Get label node from scene and store it for use later
 
        
-        print("hello")
      
     }
     
     
     func touchDown(atPoint pos : CGPoint) {
       
+    
+        
+        
+        
     }
     
     func touchMoved(toPoint pos : CGPoint) {
