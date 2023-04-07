@@ -10,12 +10,45 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var pacman: SKSpriteNode = SKSpriteNode()
+    var corona: SKSpriteNode = SKSpriteNode()
+    
+    var elma: SKSpriteNode = SKSpriteNode()
+    var meyveler: SKSpriteNode = SKSpriteNode()
+    var visne: SKSpriteNode = SKSpriteNode()
+    
+    var scoreLabel: SKLabelNode = SKLabelNode()
+    
+    var viewController: UIViewController?
+    
     
     override func didMove(to view: SKView) {
         
-        // Get label node from scene and store it for use later
-
-       
+        if let tempKarakter = self.childNode(withName: "pacman") as? SKSpriteNode {
+            pacman = tempKarakter
+        }
+        
+        if let tempKarakter = self.childNode(withName: "corona") as? SKSpriteNode {
+            corona = tempKarakter
+        }
+        
+        if let tempKarakter = self.childNode(withName: "elma") as? SKSpriteNode {
+            elma = tempKarakter
+        }
+        
+        if let tempKarakter = self.childNode(withName: "meyveler") as? SKSpriteNode {
+            meyveler = tempKarakter
+        }
+        
+        if let tempKarakter = self.childNode(withName: "visne") as? SKSpriteNode {
+            visne = tempKarakter
+        }
+        
+        if let tempKarakter = self.childNode(withName: "scoreLabel") as? SKLabelNode {
+            scoreLabel = tempKarakter
+        }
+        
+        
      
     }
     
@@ -23,7 +56,7 @@ class GameScene: SKScene {
     func touchDown(atPoint pos : CGPoint) {
       
     
-        
+        self.viewController?.performSegue(withIdentifier: "page3", sender: nil)
         
         
     }
