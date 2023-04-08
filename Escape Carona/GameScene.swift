@@ -21,8 +21,14 @@ class GameScene: SKScene {
     
     var viewController: UIViewController?
     
+    var dokunmaKontrol = false
+    
+    var timer: Timer?
+    
     
     override func didMove(to view: SKView) {
+        
+      
         
         if let tempKarakter = self.childNode(withName: "pacman") as? SKSpriteNode {
             pacman = tempKarakter
@@ -46,18 +52,31 @@ class GameScene: SKScene {
         
         if let tempKarakter = self.childNode(withName: "scoreLabel") as? SKLabelNode {
             scoreLabel = tempKarakter
+            scoreLabel.text = "xan"
         }
         
+        timer = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(GameScene.haraket), userInfo: nil, repeats: true)
         
      
     }
     
+    @objc func haraket() {
+        
+        if dokunmaKontrol {
+           
+            pacman.run(SKAction.moveBy(x: 0, y: +20, duration: 1))
+            
+        } else {
+            
+            pacman.run(SKAction.moveBy(x: 0, y: -20, duration: 1))
+        }
+             
+    }
+    
     
     func touchDown(atPoint pos : CGPoint) {
-      
-    
-        self.viewController?.performSegue(withIdentifier: "page3", sender: nil)
         
+        dokunmaKontrol = true
         
     }
     
@@ -67,10 +86,11 @@ class GameScene: SKScene {
     
     func touchUp(atPoint pos : CGPoint) {
       
+        dokunmaKontrol = false
+       
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
