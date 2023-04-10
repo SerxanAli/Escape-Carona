@@ -176,18 +176,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         print("toqqusma")
         
-        carpmadanSonra(id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.corona.rawValue, contact: contact)
+        carpmadanSonra(obj1: pacman, obj2: corona,id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.corona.rawValue, contact: contact)
         
         
     }
     
-    func carpmadanSonra(id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact){
+    func carpmadanSonra(obj1: SKSpriteNode, obj2: SKSpriteNode,id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact){
         
         if contact.bodyA.categoryBitMask == id1 && contact.bodyB.categoryBitMask == id2 {
+            
+            let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.width)! + 20), y: CGFloat(Float.random(in: 10...1250)), duration: 1)
+            
+            obj1.run(basaAl)
+            
           return  print("id1 deydi")
         }
         
         if contact.bodyB.categoryBitMask == id1 && contact.bodyA.categoryBitMask == id2 {
+            
+            let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.width)! + 20), y: CGFloat(Float.random(in: 10...1250)), duration: 0.1)
+            
+            obj2.run(basaAl)
+            
             return  print("id2 deydi")
         }
         
