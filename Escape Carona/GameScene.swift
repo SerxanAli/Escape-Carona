@@ -8,7 +8,17 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+
+enum CarpismaTipi:UInt32 {
+    case pacman = 1
+    case corona = 2
+    case elma = 3
+    case meyveler = 4
+    case visne = 5
+}
+
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var pacman: SKSpriteNode = SKSpriteNode()
     var corona: SKSpriteNode = SKSpriteNode()
@@ -36,14 +46,20 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        
+        self.physicsWorld.contactDelegate = self
         
         if let tempKarakter = self.childNode(withName: "pacman") as? SKSpriteNode {
             pacman = tempKarakter
+            
+            
+            Carpisma(obj1: pacman, obj2: corona, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.corona.rawValue)
         }
         
         if let tempKarakter = self.childNode(withName: "corona") as? SKSpriteNode {
             corona = tempKarakter
+            
+            
+            Carpisma(obj1: corona, obj2: pacman, id1: CarpismaTipi.corona.rawValue, id2:CarpismaTipi.pacman.rawValue)
         }
         
         if let tempKarakter = self.childNode(withName: "elma") as? SKSpriteNode {
@@ -67,6 +83,17 @@ class GameScene: SKScene {
         
         
         zaman = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(zamanAxisi), userInfo: nil, repeats: true)
+        
+        
+    }
+    
+    func Carpisma(obj1:SKSpriteNode, obj2:SKSpriteNode, id1:UInt32 ,id2:UInt32 ) {
+        
+        obj1.physicsBody?.categoryBitMask = id1
+        obj1.physicsBody?.collisionBitMask = id2
+        obj1.physicsBody?.contactTestBitMask = id2
+        
+        
     }
     
     @objc func zamanAxisi(){
@@ -135,6 +162,9 @@ class GameScene: SKScene {
         
     }
     
+    
+    
+    
     func touchUp(atPoint pos : CGPoint) {
         
         dokunmaKontrol = false
@@ -142,6 +172,28 @@ class GameScene: SKScene {
     }
     
  
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("toqqusma")
+        
+        carpmadanSonra(id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.corona.rawValue, contact: contact)
+        
+        
+    }
+    
+    func carpmadanSonra(id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact){
+        
+        if contact.bodyA.categoryBitMask == id1 && contact.bodyB.categoryBitMask == id2 {
+          return  print("id1 deydi")
+        }
+        
+        if contact.bodyB.categoryBitMask == id1 && contact.bodyA.categoryBitMask == id2 {
+            return  print("id2 deydi")
+        }
+        
+        
+    }
+    
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
