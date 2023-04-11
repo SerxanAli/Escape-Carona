@@ -48,6 +48,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var Score = 0 {
         didSet {
             scoreLabel2.text = "Score:\(Score)"
+            
+            let depo = UserDefaults.standard
+            depo.set(Score, forKey: "newScore")
+            
         }
     }
     

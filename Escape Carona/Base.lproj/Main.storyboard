@@ -47,7 +47,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gAw-Bb-fH0"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="udb-cd-J10" firstAttribute="centerX" secondItem="lMf-GC-o0N" secondAttribute="centerX" id="kaC-QG-x73"/>
                             <constraint firstItem="udb-cd-J10" firstAttribute="centerY" secondItem="lMf-GC-o0N" secondAttribute="centerY" id="uUg-1T-6ri"/>
@@ -76,15 +76,35 @@
                                     <segue destination="QAX-uS-s8h" kind="presentation" modalPresentationStyle="fullScreen" id="zPv-of-OnO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 76" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgt-B1-ANh">
+                                <rect key="frame" x="170.5" y="112" width="73" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HigeScore: 390" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54b-ql-Y66">
+                                <rect key="frame" x="147" y="242" width="120" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="h2O-st-rel"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2EB-eH-kOs" firstAttribute="centerX" secondItem="1R8-YU-6rz" secondAttribute="centerX" id="6dN-Kc-nAR"/>
+                            <constraint firstItem="54b-ql-Y66" firstAttribute="top" secondItem="bgt-B1-ANh" secondAttribute="bottom" constant="109" id="82q-sf-TeB"/>
+                            <constraint firstItem="bgt-B1-ANh" firstAttribute="top" secondItem="h2O-st-rel" secondAttribute="top" constant="68" id="K6z-55-Okh"/>
+                            <constraint firstItem="bgt-B1-ANh" firstAttribute="centerX" secondItem="1R8-YU-6rz" secondAttribute="centerX" id="aVx-Oc-CUw"/>
                             <constraint firstItem="2EB-eH-kOs" firstAttribute="centerY" secondItem="1R8-YU-6rz" secondAttribute="centerY" id="bl3-Qx-IqS"/>
+                            <constraint firstItem="54b-ql-Y66" firstAttribute="centerX" secondItem="1R8-YU-6rz" secondAttribute="centerX" id="m3T-qT-b0O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jIM-eB-DZd"/>
+                    <connections>
+                        <outlet property="HigeScoreLabel" destination="54b-ql-Y66" id="e38-ej-h0P"/>
+                        <outlet property="ScoreLabel" destination="bgt-B1-ANh" id="9ig-xo-oMN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8lb-op-xLi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
