@@ -66,7 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             Carpisma(obj1: pacman, obj2: meyveler, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.meyveler.rawValue)
             
             Carpisma(obj1: pacman, obj2: visne, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.visne.rawValue)
-
+            
             
         }
         
@@ -102,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel = tempKarakter
             
         }
-
+        
         if let tempKarakter = self.childNode(withName: "scoreLabel2") as? SKLabelNode {
             scoreLabel2 = tempKarakter
             
@@ -183,11 +183,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-
+    
     func touchDown(atPoint pos : CGPoint) {
         
         dokunmaKontrol = true
-      //  print(pos.y)
+        //  print(pos.y)
         
     }
     
@@ -206,7 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
- 
+    
     
     func didBegin(_ contact: SKPhysicsContact) {
         //print("toqqusma")
@@ -223,23 +223,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func carpmadanSonra(obj1: SKSpriteNode, obj2: SKSpriteNode,id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact,dusman: Bool){
         
-        if (dusman == true) {
-            
-            
-            timer?.invalidate()
-            zaman?.invalidate()
-    
-            self.viewController?.performSegue(withIdentifier: "page3", sender: nil)
-            
-        } else {
-            
+        
             if contact.bodyA.categoryBitMask == id1 && contact.bodyB.categoryBitMask == id2 {
                 
                 let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.height)! + 100), y: CGFloat(Float.random(in: 10...1250)), duration: 0.01)
                 
                 obj2.run(basaAl)
                 
-              return  print(dusman)
+                netice(n:dusman)
+                
+                
+                return  print(dusman)
             }
             
             if contact.bodyB.categoryBitMask == id1 && contact.bodyA.categoryBitMask == id2 {
@@ -248,14 +242,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 obj2.run(basaAl)
                 
-                Score = Score + 1
+                netice(n:dusman)
                 
                 return  print(dusman)
             }
             
+        
+        func netice(n:Bool){
+            if n {
+                
+                timer?.invalidate()
+                zaman?.invalidate()
+                self.viewController?.performSegue(withIdentifier: "page3", sender: nil)
+            } else {
+                Score += 1
+            }
         }
         
-      
         
         
     }
