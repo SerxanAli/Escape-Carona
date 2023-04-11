@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var visne: SKSpriteNode = SKSpriteNode()
     
     var scoreLabel: SKLabelNode = SKLabelNode()
+    var scoreLabel2: SKLabelNode = SKLabelNode()
     
     var viewController: UIViewController?
     
@@ -37,12 +38,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var zaman: Timer?
     
     
-    var Score = 50 {
+    var Zaman = 50 {
         didSet {
-            scoreLabel.text = "Score: \(Score)"
+            scoreLabel.text = "Zaman: \(Zaman)"
         }
     }
     
+    
+    var Score = 0 {
+        didSet {
+            scoreLabel2.text = "Score:\(Score)"
+        }
+    }
     
     override func didMove(to view: SKView) {
         
@@ -53,31 +60,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             
             Carpisma(obj1: pacman, obj2: corona, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.corona.rawValue)
+            
+            Carpisma(obj1: pacman, obj2: elma, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.elma.rawValue)
+            
+            Carpisma(obj1: pacman, obj2: meyveler, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.meyveler.rawValue)
+            
+            Carpisma(obj1: pacman, obj2: visne, id1: CarpismaTipi.pacman.rawValue, id2:CarpismaTipi.visne.rawValue)
+
+            
         }
+        
+        //----
         
         if let tempKarakter = self.childNode(withName: "corona") as? SKSpriteNode {
             corona = tempKarakter
             
-            
             Carpisma(obj1: corona, obj2: pacman, id1: CarpismaTipi.corona.rawValue, id2:CarpismaTipi.pacman.rawValue)
+            
         }
         
         if let tempKarakter = self.childNode(withName: "elma") as? SKSpriteNode {
             elma = tempKarakter
+            
+            Carpisma(obj1: elma, obj2: pacman, id1: CarpismaTipi.elma.rawValue, id2: CarpismaTipi.pacman.rawValue)
+            
         }
         
         if let tempKarakter = self.childNode(withName: "meyveler") as? SKSpriteNode {
             meyveler = tempKarakter
+            Carpisma(obj1: meyveler, obj2: pacman, id1: CarpismaTipi.meyveler.rawValue, id2: CarpismaTipi.pacman.rawValue)
         }
         
         if let tempKarakter = self.childNode(withName: "visne") as? SKSpriteNode {
             visne = tempKarakter
+            
+            Carpisma(obj1: visne, obj2: pacman, id1: CarpismaTipi.visne.rawValue, id2: CarpismaTipi.pacman.rawValue)
+            
         }
         
         if let tempKarakter = self.childNode(withName: "scoreLabel") as? SKLabelNode {
             scoreLabel = tempKarakter
             
         }
+
+        if let tempKarakter = self.childNode(withName: "scoreLabel2") as? SKLabelNode {
+            scoreLabel2 = tempKarakter
+            
+        }
+        
         
         timer = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(haraket), userInfo: nil, repeats: true)
         
@@ -98,9 +128,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func zamanAxisi(){
         
-        Score = Score - 1
+        Zaman = Zaman - 1
         
-        if Score < 0 {
+        if Zaman < 0 {
             
             timer?.invalidate()
             zaman?.invalidate()
@@ -131,6 +161,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hereket(obje: visne)
         
         
+        //print("eni -- \(view?.frame.size.width)")
+        //print("hundur -- \(view?.frame.size.height)")
+        
     }
     
     
@@ -154,11 +187,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func touchDown(atPoint pos : CGPoint) {
         
         dokunmaKontrol = true
-        print(pos.y)
+      //  print(pos.y)
         
     }
     
     func touchMoved(toPoint pos : CGPoint) {
+        
+        
         
     }
     
@@ -174,32 +209,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("toqqusma")
+        //print("toqqusma")
         
-        carpmadanSonra(obj1: pacman, obj2: corona,id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.corona.rawValue, contact: contact)
+        carpmadanSonra(obj1: pacman, obj2: corona,id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.corona.rawValue, contact: contact,dusman: true)
         
+        carpmadanSonra(obj1: pacman, obj2: elma, id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.elma.rawValue, contact: contact,dusman: false)
+        
+        carpmadanSonra(obj1: pacman, obj2: meyveler, id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.meyveler.rawValue, contact: contact,dusman: false)
+        
+        carpmadanSonra(obj1: pacman, obj2: visne, id1: CarpismaTipi.pacman.rawValue, id2: CarpismaTipi.visne.rawValue, contact: contact,dusman: false)
         
     }
     
-    func carpmadanSonra(obj1: SKSpriteNode, obj2: SKSpriteNode,id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact){
+    func carpmadanSonra(obj1: SKSpriteNode, obj2: SKSpriteNode,id1:UInt32 ,id2:UInt32, contact:SKPhysicsContact,dusman: Bool){
         
-        if contact.bodyA.categoryBitMask == id1 && contact.bodyB.categoryBitMask == id2 {
+        if (dusman == true) {
             
-            let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.width)! + 20), y: CGFloat(Float.random(in: 10...1250)), duration: 1)
             
-            obj1.run(basaAl)
+            timer?.invalidate()
+            zaman?.invalidate()
+    
+            self.viewController?.performSegue(withIdentifier: "page3", sender: nil)
             
-          return  print("id1 deydi")
+        } else {
+            
+            if contact.bodyA.categoryBitMask == id1 && contact.bodyB.categoryBitMask == id2 {
+                
+                let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.height)! + 100), y: CGFloat(Float.random(in: 10...1250)), duration: 0.01)
+                
+                obj2.run(basaAl)
+                
+              return  print(dusman)
+            }
+            
+            if contact.bodyB.categoryBitMask == id1 && contact.bodyA.categoryBitMask == id2 {
+                
+                let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.height)! + 100), y: CGFloat(Float.random(in: 10...1250)), duration: 0)
+                
+                obj2.run(basaAl)
+                
+                Score = Score + 1
+                
+                return  print(dusman)
+            }
+            
         }
         
-        if contact.bodyB.categoryBitMask == id1 && contact.bodyA.categoryBitMask == id2 {
-            
-            let basaAl:SKAction = SKAction.moveBy(x: CGFloat((view?.frame.size.width)! + 20), y: CGFloat(Float.random(in: 10...1250)), duration: 0.1)
-            
-            obj2.run(basaAl)
-            
-            return  print("id2 deydi")
-        }
+      
         
         
     }
